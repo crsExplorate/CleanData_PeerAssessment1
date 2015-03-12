@@ -33,6 +33,8 @@ data_subset<-data_set[,validVar]
 #Uses descriptive activity names to name the activities in the data set
 data_info<-cbind(data_activity,data_subject,data_subset)
 data_info<-merge(activities,data_info)
+data_info<-data_info[,2:dim(data_info)[2]]
 
 #From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-write.table(data_info,"tidy_data.txt",row.name=FALSE)
+data_tidy<-aggregate(.~ActivityName+ID_Subject,data=data_info,FUN=mean)
+write.table(data_tidy,"tidy_data.txt",row.name=FALSE)
